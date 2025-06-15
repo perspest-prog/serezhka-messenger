@@ -1,19 +1,20 @@
+type VoidFunction = (...args: any[]) => void
 class EventBus {
-  private readonly listeners = new Map<string, Set<(...args: any[]) => void>>()
-  on = (event: string, callback: (...arg: any[]) => void) => {
+  private readonly listeners = new Map<string, Set<VoidFunction>>()
+  on = (event: string, callback: VoidFunction) => {
     let getEntries = this.listeners.get(event)
-      if (!this.listeners.get(event)) {
+      if (!getEntries) {
           this.listeners.set(event, new Set)
       }
-      this.listeners.get(event)!.add(callback)
+      getEntries!.add(callback)
     }
-  off = (event: string, callback: (...arg: any[]) => void) => {
+  off = (event: string, callback: VoidFunction) => {
     let getEntries = this.listeners.get(event)
     if (!getEntries) {
-      throw new Error('такого метода не существует')
+      throw new Error('Неизвестный ключ')
     }
     else {
-      this.listeners.get(event)!.delete(callback)
+      getEntries!.delete(callback)
     }
   }
   emit = (event: string) => {
@@ -23,3 +24,4 @@ class EventBus {
     }
   }
 }
+export default EventBus
