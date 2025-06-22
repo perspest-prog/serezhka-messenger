@@ -1,5 +1,8 @@
+import EventBus from './EventBus' 
+
 type State<P> = any
 type Children<P> = any
+
 interface Props {}
 
 abstract class Component<P extends Props> {
@@ -7,23 +10,27 @@ abstract class Component<P extends Props> {
   protected children: Children<P>
 
   constructor(props: P) {
-    const {children, state} = Component.getStateAndChildren(props)
-    this.children = children
+    const { state, children } = Component.getStateAndChildren(props)
+    
     this.state = state
+    this.children = children
   }
 
   private static getStateAndChildren<P extends Props>(props: P) {
     const state = {} as State<P>
     const children = {} as Children<P>
+    
     for (const key in props) {
-      if (props[key] instanceof Component || Array.isArray(props[key]) && props[key].every((prop)=> prop instanceof Component)) {
-        children[key] = props[key]
-      }
-      else {
-        state[key] = props[key]
+      const value = props[key]
+      
+      if (value instanceof Component || Array.isArray(value) && value.every((prop) => prop instanceof Component)) {
+        children[key] = value
+      } else {
+        state[key] = value
       }
     }
-    return {children, state}
+    
+    return { state, children }
   }
 }
 
