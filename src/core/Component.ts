@@ -5,16 +5,17 @@ type Children<P> = any
 
 interface Props {}
 
-enum Methods {
-  'didMount' = 'didMount',
-  'DidUpdate' = 'didUpdate',
-  'WillUnmount' = 'WillUnmount'
+enum PHASES {
+  MOUNT,
+  UPDATE,
+  UNMOUNT
 }
 
 abstract class Component<P extends Props> {
+  private callEventBus = new EventBus()
+  
   protected state: State<P>
   protected children: Children<P>
-  private callEventBus = new EventBus()
 
   constructor(props: P) {
     const { state, children } = Component.getStateAndChildren(props)
@@ -22,9 +23,9 @@ abstract class Component<P extends Props> {
     this.state = state
     this.children = children
 
-    this.callEventBus.on(Methods.didMount, this._componentDidMount)
-    this.callEventBus.on(Methods.DidUpdate, this._componentDidUpdate)
-    this.callEventBus.on(Methods.WillUnmount, this._componentWillUnmount)
+    this.callEventBus.on(PHASES.MOUNT, this._componentDidMount)
+    this.callEventBus.on(PHASES.UPDATE, this._componentDidUpdate)
+    this.callEventBus.on(PHASES.UNMOUNT, this._componentWillUnmount)
   }
   
   private static getStateAndChildren<P extends Props>(props: P) {
