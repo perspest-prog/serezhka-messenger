@@ -19,7 +19,7 @@ abstract class Component<P extends Props> {
 
   constructor(props: P) {
     const { state, children } = Component.getStateAndChildren(props)
-    this.state = this.makeProxy()
+    this.state = this.makeProxy(state)
     this.children = children
 
     this.callEventBus.on(PHASES.MOUNT, this._componentDidMount)
@@ -44,32 +44,25 @@ abstract class Component<P extends Props> {
     return { state, children }
   }
   protected componentDidMount() {
-
   }
   protected componentDidUpdate() {
-
   }
   protected componentWillUnmount() {
-
   }
   private _componentDidMount() {
-
   }
   private _componentDidUpdate() {
   }
   private _componentWillUnmount() {
   }
-  makeProxy = () => {
+  private makeProxy(state: State<P>) {
     const self = this
-    return new Proxy(this.state, {
-      set: function(state, prop) {
-        if (prop !in state) {
-          state = self.callEventBus.emit(PHASES.UPDATE)
-          return self.state = state
+    return new Proxy(state, {
+      set: function(state, prop, value) {
+        if (prop in state) {
+          self.callEventBus.emit(PHASES.UPDATE)
+          return self.state[prop] = value
         }
-      },
-      get: function() {
-        return self.state
       }
     })
   }
