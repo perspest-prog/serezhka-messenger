@@ -6,7 +6,7 @@ class EventBus {
   public on(event: string, callback: VoidFunction) {
     let getEntries = this.listeners.get(event)
       if (!getEntries) {
-          this.listeners.set(event, new Set)
+        this.listeners.set(event, new Set)
       }
       getEntries!.add(callback)
   }
