@@ -1,0 +1,43 @@
+html {
+  font-family: 'Inter';
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-weight: 600;
+  color: #1E1E1E;
+}
+
+.container {
+  width: 340px;
+  height: 500px;
+  border-radius: 12px;
+  box-shadow: 0px 0px 6px 0px #00000024;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 15px;
+}
+
+.fieldset {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 0;
+}

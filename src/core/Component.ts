@@ -1,10 +1,14 @@
-import type { TemplateDelegate } from 'handlebars'
+import type { K, TemplateDelegate } from 'handlebars'
 import { nanoid } from 'nanoid'
-
 import EventBus from './EventBus'
 
+type Events = {
+  [K in keyof HTMLElementEventMap]?: (arg: HTMLElementEventMap[K]) => void
+}
+
 interface Props {
-  events?: Record<string, () => void>
+  events?: Events,
+  classes?: CSSModuleClasses,
 }
 
 type State<P> = any
@@ -18,23 +22,23 @@ enum PHASES {
 
 abstract class Component<P extends Props = any> {
   private id = nanoid(6)
-
-  // @ts-ignore
-  private element: HTMLElement
+  protected events: Events
+  private element: HTMLElement = document.createElement("template")
   private callEventBus = new EventBus()
   
-  protected state: State<P>
+  protected readonly state: State<P>
   protected children: Children<P>
 
-  constructor(props: P) {
+  constructor({events, ...props}: P) {
     const { state, children } = Component.getStateAndChildren(props)
     
-    this.state = this.makeProxy(state)
+    this.state = this.makeProxyState(state)
     this.children = children
+    this.events = this.makeProxyEvents(events || {})
     
-    this.callEventBus.on(PHASES.MOUNT, this._componentDidMount)
-    this.callEventBus.on(PHASES.UPDATE, this._componentDidUpdate)
-    this.callEventBus.on(PHASES.UNMOUNT, this._componentWillUnmount)
+    this.callEventBus.on(PHASES.MOUNT, this._componentDidMount.bind(this))
+    this.callEventBus.on(PHASES.UPDATE, this._componentDidUpdate.bind(this))
+    this.callEventBus.on(PHASES.UNMOUNT, this._componentWillUnmount.bind(this))
     
     this.init()
   }
@@ -56,15 +60,24 @@ abstract class Component<P extends Props = any> {
     return { state, children }
   }
 
-  private makeProxy(state: State<P>) {
+  private makeProxyState(state: State<P>) {
     const self = this
     
     return new Proxy(state, {
       set: (target, prop, value) => {
-        if (prop in target) {
+          target[prop] = value
           self.callEventBus.emit(PHASES.UPDATE)
-          return target[prop] = value
+          return true
         }
+      })
+  }
+  private makeProxyEvents(events: Events) {
+    const self = this
+    return new Proxy(events, {
+      set: (target: Events, prop: keyof HTMLElementEventMap, value) => {
+        target[prop] = value
+        self.addEvents()
+        return true
       }
     })
   }
@@ -96,11 +109,10 @@ abstract class Component<P extends Props = any> {
     tmp.innerHTML = template({...this.state, ...context})
     
     const replaceStub = (component: Component) => {
-      const stub = tmp.querySelector(`[data-id="${component.id}"]`)
-      
+      const stub = tmp.content.querySelector(`[data-id="${component.id}"]`)
       stub!.replaceWith(component.getContent())
     }
-    
+
     for (const name in this.children) {
       const field = this.children[name]
       
@@ -115,15 +127,14 @@ abstract class Component<P extends Props = any> {
   }
 
   private addEvents() {
-    const events = this.state.events
-    
+    const events = this.events
     for (const event in events) {
       this.element.addEventListener(event, events[event])
     }
   }
   
   private removeEvents() {
-    const events = this.state.events
+    const events = this.events
     
     for (const event in events) {
       this.element.removeEventListener(event, events[event])
@@ -194,3 +205,4 @@ abstract class Component<P extends Props = any> {
 }
 
 export default Component
+export type { Props }

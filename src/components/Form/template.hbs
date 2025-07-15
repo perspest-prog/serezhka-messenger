@@ -1,0 +1,11 @@
+<div class={{classes.container}}>
+  <h1>{{value}}</h1>
+  <form class={{classes.form}} novalidate>
+    <fieldset class={{classes.fieldset}}>
+      {{#each inputs}}
+        {{{this}}}
+      {{/each}}
+    </fieldset> 
+    {{{button}}}
+  </form>
+</div>
