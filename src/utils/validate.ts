@@ -7,7 +7,8 @@ const Regulars = {
   login: /^(?=.*[a-zA-Z])[a-zA-Z0-9]{3,20}$/,
 } as const
 
-export const validate = (value: string, name: string) => {
+export const validate = (state: Record<any, any>) => {
+  let {value, name} = state
   value = value.trim()
   switch (name) {
     case "first_name":

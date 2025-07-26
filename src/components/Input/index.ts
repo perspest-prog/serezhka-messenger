@@ -22,8 +22,8 @@ class Input extends Component<InputProps> {
   protected componentDidMount(): void {
     this.events.change = this.handlerChange.bind(this)
   }
-  private handlerChange(el: Event) {
-    this.state.value = el.target.value
+  private handlerChange(event: Event) {
+    this.state.value = event.target.value
     this.handlerFocusout()
   }
   public handlerFocusout() {

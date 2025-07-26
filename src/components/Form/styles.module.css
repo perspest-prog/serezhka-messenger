@@ -1,19 +1,9 @@
-html {
-  font-family: 'Inter';
-}
+@import url("../../../style.css");
 
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
 h1 {
   font-weight: 600;
-  color: #1E1E1E;
+  color: var(--black-color);
 }
 
 .container {

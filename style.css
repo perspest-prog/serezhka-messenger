@@ -1,0 +1,20 @@
+:root {
+  --black-color: #1E1E1E;
+  --white-color: #FFF;
+  --gray-color: #999;
+  --blue-color: #3369F3;
+  --red-color: #FF0000;
+}
+
+html {
+  font-family: 'Inter';
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
