@@ -7,7 +7,7 @@ const Regulars = {
   login: /^(?=.*[a-zA-Z])[a-zA-Z0-9]{3,20}$/,
 } as const
 
-export const validate = (value: string, name: string) => {
+export const validate = (value: string, name: string): [string, boolean] => {
   if (!(name in Regulars)) {
     return ['', false]
   }
