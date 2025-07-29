@@ -1,0 +1,9 @@
+.button {
+  cursor: pointer;
+  color: var(--white-color);
+  background-color: var(--blue-color);
+  width: 280px;
+  height: 37px;
+  border-radius: 8px;
+  border: 0;
+}

@@ -1,0 +1,35 @@
+.main {
+  width: 280px;
+  font-size: 0.75rem;
+  padding: 0.5rem 0;
+  border: 0;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: var(--blue-color);
+  outline: none;
+}
+.not-valid {
+  border-bottom-color: var(--red-color);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.error {
+  display: inline-block;
+  user-select: none;
+  font-size: 0.6rem;
+  color: var(--red-color);
+}
+
+.error:not(:empty) {
+  margin-block-start: 0.5rem;
+}
+
+.label {
+  font-weight: 500;
+  font-size: 0.6rem;
+  color: var(--gray-color);
+}

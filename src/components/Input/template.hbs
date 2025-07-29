@@ -1,0 +1,9 @@
+<div class="{{classes.container}}">
+  <label class="{{classes.label}}" for={{name}}>{{labelValue}}</label>
+  {{#if isValid}}
+    <input class={{classes.main}} type={{type}} name={{name}} id={{name}} value="{{value}}">
+  {{else}}
+    <input class="{{classes.main}} {{classes.not-valid}}" type={{type}} name={{name}} id={{name}} value="{{value}}">
+  {{/if}}
+  <span class={{classes.error}}>{{error}}</span>
+</div>

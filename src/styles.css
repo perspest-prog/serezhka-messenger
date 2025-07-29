@@ -1,0 +1,28 @@
+:root {
+  --black-color: #1E1E1E;
+  --white-color: #FFF;
+  --gray-color: #999;
+  --blue-color: #3369F3;
+  --red-color: #FF0000;
+}
+
+body, input, button {
+  font-family: 'Inter', sans-serif;
+}
+
+input:autofill {
+  box-shadow: 0 0 0 30px white inset;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
