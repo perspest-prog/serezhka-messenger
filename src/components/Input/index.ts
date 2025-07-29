@@ -6,14 +6,14 @@ import { validate } from "../../utils/validate";
 interface InputProps extends Props{
   name: "first_name" | "second_name" | "login" | "email" | "email" | "password" | "phone",
   type: string,
-  error?: string,
+  error: string,
   labelValue: string,
   value: string,
-  isValid?: boolean 
+  isValid: boolean 
 }
 
 class Input extends Component<InputProps> {
-  constructor(props: Omit<InputProps, "value">) {
+  constructor(props: Omit<InputProps, "value" | "error" | "isValid">) {
     super({...props, classes, value: "", error: "", isValid: true})
   }
   protected render(): Handlebars.TemplateDelegate {
@@ -23,14 +23,13 @@ class Input extends Component<InputProps> {
     this.events.change = this.handlerChange.bind(this)
   }
   private handlerChange(event: Event) {
-    this.state.value = event.target.value
+    this.state.value = event.target.value.trim()
     this.handlerFocusout()
   }
   public handlerFocusout() {
     const [error, isValid] = validate(this.state.value, this.state.name)
     this.state.error = error
     this.state.isValid = isValid
-    console.log(this.state.isValid)
     return isValid
   }
 }

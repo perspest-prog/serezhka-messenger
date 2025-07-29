@@ -1,9 +1,9 @@
-<div class={{classes.input__container}}>
-  <label for={{name}}>{{labelValue}}</label>
+<div class="{{classes.container}}">
+  <label class="{{classes.label}}" for={{name}}>{{labelValue}}</label>
   {{#if isValid}}
-    <input class={{classes.input}} type={{type}} name={{name}} id={{name}} value="{{value}}">
+    <input class={{classes.main}} type={{type}} name={{name}} id={{name}} value="{{value}}">
   {{else}}
-    <input class="{{classes.input}} {{classes.input__not-valid}}" type={{type}} name={{name}} id={{name}} value="{{value}}">
+    <input class="{{classes.main}} {{classes.not-valid}}" type={{type}} name={{name}} id={{name}} value="{{value}}">
   {{/if}}
-  <span class={{classes.span}}>{{error}}</span>
+  <span class={{classes.error}}>{{error}}</span>
 </div>

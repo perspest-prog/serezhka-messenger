@@ -1,7 +1,5 @@
-@import url("../../../style.css");
-
 .button {
-  font-family: 'Inter';
+  cursor: pointer;
   color: var(--white-color);
   background-color: var(--blue-color);
   width: 280px;

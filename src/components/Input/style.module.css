@@ -1,38 +1,35 @@
-@import url("../../../style.css");
-
-.input {
-  font-family: 'Inter', sans-serif;
+.main {
   width: 280px;
-  font-size: 1rem;
+  font-size: 0.75rem;
+  padding: 0.5rem 0;
   border: 0;
   border-bottom-width: 2px;
   border-bottom-style: solid;
   border-bottom-color: var(--blue-color);
-  outline: 0;
+  outline: none;
 }
-.input__not-valid {
+.not-valid {
   border-bottom-color: var(--red-color);
 }
 
-.input__container {
+.container {
   display: flex;
   flex-direction: column;
-  row-gap: 5px;
 }
 
 .error {
-  border-bottom: var(--red-color);
-}
-.span {
-  display: block;
-  min-height: 15px;
-  font-size: 0.75rem;
+  display: inline-block;
+  user-select: none;
+  font-size: 0.6rem;
   color: var(--red-color);
 }
 
-label {
+.error:not(:empty) {
+  margin-block-start: 0.5rem;
+}
+
+.label {
   font-weight: 500;
-  font-size: 9px;
-  line-height: 9px;
+  font-size: 0.6rem;
   color: var(--gray-color);
 }
