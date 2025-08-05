@@ -1,4 +1,4 @@
-import type { K, TemplateDelegate } from 'handlebars'
+import type { TemplateDelegate } from 'handlebars'
 import { nanoid } from 'nanoid'
 import EventBus from './EventBus'
 
@@ -75,6 +75,7 @@ abstract class Component<P extends Props = any> {
     const self = this
     return new Proxy(events, {
       set: (target: Events, prop: keyof HTMLElementEventMap, value) => {
+        self.removeEvents()
         target[prop] = value
         self.addEvents()
         return true
@@ -97,7 +98,6 @@ abstract class Component<P extends Props = any> {
     
     for (const name in this.children) {
       const field = this.children[name]
-      
       if (Array.isArray(field)) {
         context[name] = field.map((component) => `<div data-id="${component.id}"></div>`)
       } else {
@@ -107,7 +107,6 @@ abstract class Component<P extends Props = any> {
     
     const tmp = document.createElement('template')
     tmp.innerHTML = template({...this.state, ...context})
-    
     const replaceStub = (component: Component) => {
       const stub = tmp.content.querySelector(`[data-id="${component.id}"]`)
       stub!.replaceWith(component.getContent())
@@ -176,11 +175,10 @@ abstract class Component<P extends Props = any> {
     
     for (const name in this.children) {
       const field = this.children[name]
-      
       if (Array.isArray(field)) {
-        field.forEach((element) => element.callEventBus.emit(PHASES.MOUNT))
+        field.forEach((element) => element.dispatchComponentDidMount())
       } else {
-        field.callEventBus.emit(PHASES.MOUNT)
+        field.dispatchComponentDidMount()
       }
     }
   }
@@ -192,9 +190,9 @@ abstract class Component<P extends Props = any> {
       const field = this.children[name]
       
       if (Array.isArray(field)) {
-        field.forEach((element) => element.callEventBus.emit(PHASES.UNMOUNT))
+        field.forEach((element) => element.dispatchComponentWillUmnout())
       } else {
-        field.callEventBus.emit(PHASES.UNMOUNT)
+        field.dispatchComponentWillUmnout()
       }
     }
   }
