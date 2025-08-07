@@ -1,7 +1,6 @@
 import template from "./template.hbs"
 import Component, { type Props } from "../../core/Component";
 import classes from "./style.module.css"
-import route from "../..";
 import Router from "../../core/Router";
 
 interface LinkProps extends Props {
@@ -18,11 +17,9 @@ class Link extends Component<LinkProps> {
   }
   private handler(event: Event) {
     event.preventDefault()
-    console.log("dadass")
     
-    const xui = new Router()
-    xui.navigate(this.state.path)
-
+    const routeInstance = new Router()
+    routeInstance.navigate(this.state.path)
   }
 
   protected render(): Handlebars.TemplateDelegate {

@@ -1,0 +1,8 @@
+<div class="{{classes.container-profile}}">
+  <label class="{{classes.label-profile}}" for={{name}}>{{labelValue}}</label>
+  {{#if isFrozen}}
+    <input class={{classes.input-profile}} type={{type}} name={{name}} id={{name}} value="{{value}}" disabled>
+  {{else}}
+    <input class="{{classes.input-profile}}" type={{type}} name={{name}} id={{name}} value="{{value}}">
+  {{/if}}
+</div>

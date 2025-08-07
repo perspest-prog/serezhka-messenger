@@ -8,7 +8,7 @@ import Link from "../Link";
 interface FormProps extends Props {
   action: (data: Record<string, string>) => void
   inputs: Array<Input>,
-  button: Button,
+  button?: Button,
   link: Link,
   value: string
 }
