@@ -1,7 +1,6 @@
 import Component, { type Props } from "../../core/Component";
 import template from "./template.hbs"
 import classes from "./styles.module.css"
-import Form from "../Form";
 
 interface ButtonProps extends Props {
   type: "button" | "submit" | "reset",

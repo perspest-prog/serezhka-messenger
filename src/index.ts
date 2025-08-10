@@ -1,17 +1,21 @@
-import Registration from "./pages/Registration"
-import Authorisation from "./pages/Authorisation"
-import Profile from "./pages/Profile"
-import Router from "./core/Router"
-import "./styles.css"
+import Registration from "./pages/Registration";
+import Authorisation from "./pages/Authorisation";
+import Profile from "./pages/Profile";
+import Router from "./core/Router";
+import "./styles.css";
 
-const rootElement: HTMLElement = document.getElementById('root') as HTMLElement
+window.addEventListener("DOMContentLoaded", () => {
+  const rootElement = document.getElementById("root");
 
-const route = new Router(rootElement)
+  if (!rootElement) {
+    throw new Error();
+  }
 
-route
-  .use('/signup', new Registration())
-  .use('/auth', new Authorisation())
-  .use('/profile', new Profile())
-  .start()
+  const router = new Router(rootElement);
 
-export default route
+  router
+    .use("/signup", Registration)
+    .use("/auth", Authorisation)
+    .use("/profile", Profile)
+    .start();
+});

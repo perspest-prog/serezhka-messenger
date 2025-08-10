@@ -1,9 +1,9 @@
-import template from "./template.hbs"
+import Component, { type Props } from "../../core/Component";
 import Button from "../../components/Button";
 import Form from "../../components/Form";
 import Input from "../../components/Input";
-import Component, { type Props } from "../../core/Component";
 import Link from "../../components/Link";
+import template from "./template.hbs"
 
 interface RegistrationProps extends Props {
   form: Form

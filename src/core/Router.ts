@@ -48,8 +48,8 @@ class Router {
     this.onRoute()
   }
 
-  public use(pathname: string, page: Component) {
-    this.routes.set(pathname, page)
+  public use(pathname: string, page: new () => Component) {
+    this.routes.set(pathname, new page)
 
     return this
   }

@@ -1,15 +1,16 @@
 .input-validate {
-  width: 280px;
+  inline-size: 280px;
   font-size: 0.75rem;
-  padding: 0.5rem 0;
-  border: 0;
-  border-bottom-width: 2px;
-  border-bottom-style: solid;
-  border-bottom-color: var(--blue-color);
+  padding-block: 0.5rem;
+  padding-inline: 0;
+  border: none;
+  border-block-end-width: 2px;
+  border-block-end-style: solid;
+  border-block-end-color: var(--blue-color);
   outline: none;
 }
 .not-valid {
-  border-bottom-color: var(--red-color);
+  border-block-end-color: var(--red-color);
 }
 
 .container {
@@ -18,7 +19,6 @@
 }
 
 .error {
-  display: inline-block;
   user-select: none;
   font-size: 0.6rem;
   color: var(--red-color);

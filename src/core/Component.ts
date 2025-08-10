@@ -15,9 +15,9 @@ type State<P> = any
 type Children<P> = any
 
 enum PHASES {
-  'MOUNT' = 'MOUNT',
-  'UPDATE' = 'UPDATE',
-  'UNMOUNT' = 'UNMOUNT'
+  MOUNT = 'MOUNT',
+  UPDATE = 'UPDATE',
+  UNMOUNT = 'UNMOUNT'
 }
 
 abstract class Component<P extends Props = any> {
