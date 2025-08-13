@@ -2,8 +2,8 @@
   cursor: pointer;
   color: var(--white-color);
   background-color: var(--blue-color);
-  width: 280px;
-  height: 37px;
+  inline-size: 280px;
+  padding-block: 0.75rem;
   border-radius: 8px;
   border: 0;
 }

@@ -1,29 +1,21 @@
-import Button from "./components/Button"
-import Input from "./components/Input"
-import Form from "./components/Form"
+import Registration from "./pages/Registration";
+import Authorisation from "./pages/Authorisation";
+import Profile from "./pages/Profile";
+import Router from "./core/Router";
+import "./styles.css";
 
-import "./styles.css"
+window.addEventListener("DOMContentLoaded", () => {
+  const rootElement = document.getElementById("root");
 
-const form = new Form(
-  {
-    value: "Регистрация",
-    inputs:
-    [
-      new Input({name: "email", type: "text", labelValue: "Почта"}), 
-      new Input({name: "login", type: "text", labelValue: "Логин"}),
-      new Input({name: "first_name", type: "text", labelValue: "Имя"}),
-      new Input({name: "second_name", type: "text", labelValue: "Фамилия"}),
-      new Input({name: "phone", type: "text", labelValue: "Телефон"}),
-      new Input({name: "password", type: "password", labelValue: "Пароль"}),
-    ],
-    button: new Button(
-      {
-        type: 'submit',
-        label: 'Зарегистрироваться'
-      }
-    ),
-    action: console.log
+  if (!rootElement) {
+    throw new Error();
   }
-)
-document.body.append(form.getContent())
-form.dispatchComponentDidMount()
+
+  const router = new Router(rootElement);
+
+  router
+    .use("/signup", Registration)
+    .use("/auth", Authorisation)
+    .use("/profile", Profile)
+    .start();
+});

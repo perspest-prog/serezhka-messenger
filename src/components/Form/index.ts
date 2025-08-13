@@ -3,11 +3,13 @@ import Component, { type Props } from "../../core/Component";
 import classes from "./styles.module.css"
 import Input from "../Input";
 import type Button from "../Button";
+import Link from "../Link";
 
 interface FormProps extends Props {
   action: (data: Record<string, string>) => void
   inputs: Array<Input>,
-  button: Button,
+  button?: Button,
+  link: Link,
   value: string
 }
 

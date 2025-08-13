@@ -14,6 +14,7 @@ class Button extends Component<ButtonProps> {
   protected render(): Handlebars.TemplateDelegate {
     return template
   }
+
 }
 
 export default Button
