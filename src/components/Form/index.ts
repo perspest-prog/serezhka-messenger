@@ -4,6 +4,7 @@ import classes from "./styles.module.css"
 import Input from "../Input";
 import type Button from "../Button";
 import Link from "../Link";
+import connect from "../../utils/connect";
 
 interface FormProps extends Props {
   action: (data: Record<string, string>) => void
@@ -37,4 +38,6 @@ class Form extends Component<FormProps> {
   }
 }
 
-export default Form
+export default connect(Form, (state) => {
+  return {value: state.name}
+})

@@ -10,7 +10,7 @@ class Router {
 
   constructor(container?: Node) {
     if (Router.instance) {
-        return Router.instance
+      return Router.instance
     }
         
     this.container = container!
@@ -55,7 +55,7 @@ class Router {
   }
 
   public start() {
-    window.addEventListener("popstate", () => this.onRoute())
+    window.addEventListener("popstate", this.onRoute.bind(this))
     this.onRoute()
   }
 }
