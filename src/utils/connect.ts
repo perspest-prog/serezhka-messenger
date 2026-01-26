@@ -2,11 +2,11 @@ import Component from "../core/Component"
 import type { State } from "../core/Store"
 import Store from "../core/Store"
 
-type ComponentProps<T extends new (props: Record<string, unknown>) => Component> = 
+type ComponentProps<T extends new (props: any) => Component> = 
   T extends new (props: infer U) => Component ? U : never
 
 
-function connect<T extends new (props: Record<string, unknown>) => Component>(className: T, selector: (state: State) => Partial<ComponentProps<T>>) {
+function connect<T extends new (props: any) => Component>(className: T, selector: (state: State) => Partial<ComponentProps<T>>) {
   return class extends className {
     constructor(props: ComponentProps<T>) {
       const store = new Store()
