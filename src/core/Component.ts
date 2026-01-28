@@ -11,10 +11,18 @@ interface Props {
   classes?: CSSModuleClasses,
 }
 
-type State<P> = any
-type Children<P> = any
+type State<P> = Pick<P, TypeofState<P>>
+type Children<P> = Pick<P, TypeofChildren<P>>
 
-enum PHASES {
+type TypeofState<P> = {
+  [K in keyof P]: P[K] extends Component | Array<Component> ? never : K
+}[keyof P]
+
+type TypeofChildren<P> = {
+  [K in keyof P]: P[K] extends Component | Array<Component> ? K : never
+}[keyof P]
+
+const enum PHASES {
   MOUNT = 'MOUNT',
   UPDATE = 'UPDATE',
   UNMOUNT = 'UNMOUNT'
@@ -27,7 +35,7 @@ abstract class Component<P extends Props = any> {
   private callEventBus = new EventBus()
   
   protected readonly state: State<P>
-  protected children: Children<P>
+  protected readonly children: Children<P>
 
   constructor({events, ...props}: P) {
     const { state, children } = Component.getStateAndChildren(props)
@@ -43,7 +51,7 @@ abstract class Component<P extends Props = any> {
     this.init()
   }
 
-  private static getStateAndChildren<P extends Props>(props: P) {
+  public static getStateAndChildren<P extends Props>(props: P) {
     const state = {} as State<P>
     const children = {} as Children<P>
     
@@ -107,6 +115,7 @@ abstract class Component<P extends Props = any> {
     
     const tmp = document.createElement('template')
     tmp.innerHTML = template({...this.state, ...context})
+    
     const replaceStub = (component: Component) => {
       const stub = tmp.content.querySelector(`[data-id="${component.id}"]`)
       stub!.replaceWith(component.getContent())
@@ -203,4 +212,4 @@ abstract class Component<P extends Props = any> {
 }
 
 export default Component
-export type { Props }
+export type { Props, State }
