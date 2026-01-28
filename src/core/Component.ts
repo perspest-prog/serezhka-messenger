@@ -35,7 +35,7 @@ abstract class Component<P extends Props = any> {
   private callEventBus = new EventBus()
   
   protected readonly state: State<P>
-  protected children: Children<P>
+  protected readonly children: Children<P>
 
   constructor({events, ...props}: P) {
     const { state, children } = Component.getStateAndChildren(props)

@@ -7,13 +7,17 @@ type ComponentProps<T extends new (props: any) => Component> =
 
 
 function connect<T extends new (props: any) => Component>(className: T, selector: (state: State) => Partial<ComponentProps<T>>) {
+  const store = new Store()
+  
   return class extends className {
     constructor(props: ComponentProps<T>) {
-      const store = new Store()
       super({...props, ...selector(store.getState())})
+
       store.on('update', () => {
         const data = selector(store.getState())
+
         const {state, children} = Component.getStateAndChildren(data)
+
         Object.assign(this.state, state)
         Object.assign(this.children, children)
       })

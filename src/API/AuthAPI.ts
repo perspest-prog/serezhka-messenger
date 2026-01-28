@@ -1,4 +1,4 @@
-import BaseApi from "./BaseApi";
+import BaseAPI from "./BaseAPI";
 
 type UserInfo = {
     "id": number,
@@ -11,7 +11,7 @@ type UserInfo = {
     "email": string
 }
 
-class AuthApi extends BaseApi {
+class AuthAPI extends BaseAPI {
   constructor() {
     super('/auth')
   }
@@ -25,6 +25,8 @@ class AuthApi extends BaseApi {
     return this.http.post<void>('/signin', formData)
   }
   public logout() {
-    return this.http.post<void>('/logout', new FormData())
+    return this.http.post<void>('/logout')
   }
-} 
+}
+
+export default AuthAPI
