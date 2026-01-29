@@ -4,10 +4,9 @@ import classes from "./styles.module.css"
 import Input from "../Input";
 import type Button from "../Button";
 import Link from "../Link";
-import connect from "../../utils/connect";
 
 interface FormProps extends Props {
-  action: (data: Record<string, string>) => void
+  action: (data: FormData) => void
   inputs: Array<Input>,
   button?: Button,
   link: Link,
@@ -25,9 +24,10 @@ class Form extends Component<FormProps> {
 
   private handlerButton(ev: Event) {
     ev.preventDefault()
-
+    
+    const data = new FormData()
     if (this.children.inputs.every((input: Input) => input.handlerFocusout.call(input))) {
-      const data = (this.children.inputs as Input[]).reduce((acc, { state }) => ({ ...acc, [state.name]: state.value}), {})
+      this.children.inputs.forEach((input: Input) => data.append(input.state.name, input.state.value))
 
       this.state.action(data)
     }
@@ -38,6 +38,4 @@ class Form extends Component<FormProps> {
   }
 }
 
-export default connect(Form, (state) => {
-  return {value: state.name}
-})
+export default Form;

@@ -6,10 +6,10 @@ class BaseApi {
   constructor(pathname: string) {
     this.pathname = pathname
     this.http = {
-      get: this.get,
-      post: this.post,
-      put: this.put,
-      delete: this.delete
+      get: this.get.bind(this),
+      post: this.post.bind(this),
+      put: this.put.bind(this),
+      delete: this.delete.bind(this)
     }
   }
   private async fetchWrapper<T>(method: string, pathname: string, body?: FormData, query?: Record<string, string>, json: boolean = true): Promise<T> {
@@ -22,27 +22,30 @@ class BaseApi {
     const data = await fetch(url, {
       credentials: 'include',
       method,
-      body: body ? !json ? body : JSON.stringify(Object.fromEntries(body)) : null
+      body: body ? !json ? body : JSON.stringify(Object.fromEntries(body)) : null,
+      headers: {
+        'Content-Type': json ? 'application/json' : 'multipart/form-data'
+      },
     })
     if (data.ok) {
-      return data.json()
+      return data.headers.get('Content-Type') === 'application/json' ? data.json() : data.text() as T
     }
     else {
       throw new Error('Not ok')
     }
   }
   protected get<T>(pathname: string): Promise<T> {
-    return this.fetchWrapper<T>(pathname,'GET')
+    return this.fetchWrapper<T>('GET', pathname)
   }
   protected post<T>(pathname: string, body: FormData): Promise<T>{
-    return this.fetchWrapper<T>(pathname, 'POST', body)
+    return this.fetchWrapper<T>('POST', pathname, body)
   }
   protected put<T>(pathname: string, body: FormData): Promise<T> {
-    return this.fetchWrapper<T>(pathname, 'PUT', body)
+    return this.fetchWrapper<T>('PUT', pathname, body)
   }
   protected delete<T>(pathname: string, body: FormData): Promise<T> {
-    return this.fetchWrapper<T>(pathname, 'DELETE', body)
+    return this.fetchWrapper<T>('DELETE', pathname, body)
   }
 }
 
-export default BaseApi
+export default BaseApi;

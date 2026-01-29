@@ -14,7 +14,7 @@ interface InputProps extends Props{
 
 class Input extends Component<InputProps> {
   constructor(props: Omit<InputProps, "value" | "error" | "isValid">) {
-    super({...props, classes, value: "", error: "", isValid: true})
+    super({...props, classes, error: "", isValid: true})
   }
   protected render(): Handlebars.TemplateDelegate {
     return template

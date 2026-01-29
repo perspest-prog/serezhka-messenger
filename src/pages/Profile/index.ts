@@ -4,6 +4,7 @@ import Input from "./Input";
 import Button from "../../components/Button";
 import Form from "./Form"
 import classes from "./style.module.css"
+import withAuth from "../../utils/HOC/withAuth";
 
 interface ProfileProps extends Props {
   form: Form
@@ -41,4 +42,4 @@ class Profile extends Component<ProfileProps> {
   
 }
 
-export default Profile
+export default withAuth(Profile);

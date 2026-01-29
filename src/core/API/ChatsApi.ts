@@ -5,3 +5,5 @@ class ChatsApi extends BaseApi {
     super('/chats')
   }
 }
+
+export default ChatsApi;

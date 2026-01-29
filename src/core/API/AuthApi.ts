@@ -1,22 +1,12 @@
 import BaseApi from "./BaseApi";
-
-type UserInfo = {
-    "id": number,
-    "first_name": string,
-    "second_name": string,
-    "display_name": string,
-    "phone": string,
-    "login": string,
-    "avatar": string,
-    "email": string
-}
+import type { User } from "../settings";
 
 class AuthApi extends BaseApi {
   constructor() {
     super('/auth')
   }
-  public fetchUser(): Promise<UserInfo> {
-    return this.http.get<UserInfo>('/user')
+  public fetchUser(): Promise<User> {
+    return this.http.get<User>('/user')
   }
   public signup(formData: FormData) {
     return this.http.post<void>('/signup', formData)
@@ -27,4 +17,6 @@ class AuthApi extends BaseApi {
   public logout() {
     return this.http.post<void>('/logout', new FormData())
   }
-} 
+}
+
+export default AuthApi;

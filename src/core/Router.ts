@@ -1,38 +1,27 @@
 import type Component from "./Component"
 
 class Router {
-  private static instance: Router | null = null
-
   private container!: Node
   private currentPage: Component | null = null
   private routes = new Map<string, Component>()
 
-
-  constructor(container?: Node) {
-    if (Router.instance) {
-      return Router.instance
-    }
-        
+  constructor(container?: Node) { 
     this.container = container!
-
-    Router.instance = this
   }
 
   private onRoute() {
     const route = this.routes.get(window.location.pathname)
-
     if (!route) {
-        throw new Error
+        throw new Error()
     } else {
         if (this.currentPage) {
             this.currentPage.dispatchComponentWillUmnout()
             this.container.removeChild(this.currentPage.getContent())
         }
+        this.currentPage = route
 
         this.container.appendChild(route.getContent())
         route.dispatchComponentDidMount()
-
-        this.currentPage = route
     }
   }
 
@@ -60,4 +49,4 @@ class Router {
   }
 }
 
-export default Router
+export default Router;
