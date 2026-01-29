@@ -1,17 +1,17 @@
-import Component, {type Props} from "../../../core/Component";
-import type Input from "../Input";
-import template from "./template.hbs"
-import classes from "./style.module.css"
-import Button from "../../../components/Button";
+import Component, { type Props } from '../../../core/Component'
+import type Input from '../Input'
+import template from './template.hbs'
+import classes from './style.module.css'
+import Button from '../../../components/Button'
 
 interface FormProps extends Props {
-  inputs: Array<Input>,
+  inputs: Array<Input>
   buttons: Array<Button>
 }
 
 class Form extends Component<FormProps> {
   constructor(props: FormProps) {
-    super({...props, classes})
+    super({ ...props, classes })
   }
 
   protected componentDidMount(): void {

@@ -1,22 +1,21 @@
-import template from "./template.hbs";
-import Component, { type Props } from "../../core/Component";
-import classes from "./styles.module.css"
-import Input from "../Input";
-import type Button from "../Button";
-import Link from "../Link";
-import connect from "../../utils/connect";
+import template from './template.hbs'
+import Component, { type Props } from '../../core/Component'
+import classes from './styles.module.css'
+import Input from '../Input'
+import type Button from '../Button'
+import Link from '../Link'
 
 interface FormProps extends Props {
-  action: (data: Record<string, string>) => void
-  inputs: Array<Input>,
-  button?: Button,
-  link: Link,
+  action: (data: FormData) => void
+  inputs: Array<Input>
+  button: Button
+  link: Link
   value: string
 }
 
 class Form extends Component<FormProps> {
   constructor(props: FormProps) {
-    super({...props, classes})
+    super({ ...props, classes })
   }
 
   protected componentDidMount(): void {
@@ -26,8 +25,9 @@ class Form extends Component<FormProps> {
   private handlerButton(ev: Event) {
     ev.preventDefault()
 
+    const data = new FormData()
     if (this.children.inputs.every((input: Input) => input.handlerFocusout.call(input))) {
-      const data = (this.children.inputs as Input[]).reduce((acc, { state }) => ({ ...acc, [state.name]: state.value}), {})
+      this.children.inputs.forEach((input: Input) => data.append(input.state.name, input.state.value))
 
       this.state.action(data)
     }
@@ -38,6 +38,4 @@ class Form extends Component<FormProps> {
   }
 }
 
-export default connect(Form, (state) => {
-  return {value: state.name}
-})
+export default Form

@@ -8,42 +8,53 @@ abstract class BaseAPI {
     this.pathname = pathname
 
     this.http = {
-      get: this.get,
-      post: this.post,
-      put: this.put,
-      delete: this.delete
+      get: this.get.bind(this),
+      post: this.post.bind(this),
+      put: this.put.bind(this),
+      delete: this.delete.bind(this),
     }
   }
 
-  private async fetchWrapper<T>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', pathname: string, body?: FormData, query?: Record<string, string>, toJSON: boolean = true): Promise<T> {
+  private async fetchWrapper<T>(
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+    pathname: string,
+    body?: FormData,
+    query?: Record<string, string>,
+    toJSON: boolean = true,
+  ) {
     const url = new URL(BaseAPI.BASE_URL + this.pathname + pathname)
+
     if (query) {
       for (const [key, value] of Object.entries(query)) {
         url.searchParams.set(key, value)
       }
     }
-    const data = await fetch(url, {
-      credentials: 'include',
+
+    const responce = await fetch(url, {
       method,
-      body: body ? !toJSON ? body : JSON.stringify(Object.fromEntries(body)) : null
+      credentials: 'include',
+      headers: {
+        'Content-Type': toJSON ? 'application/json' : 'multipart/form-data',
+      },
+      body: body ? (toJSON ? JSON.stringify(Object.fromEntries(body)) : body) : null,
     })
-    if (data.ok) {
-      return data.json()
-    }
-    else {
+
+    if (!responce.ok) {
       throw new Error('Not ok')
     }
+
+    return (responce.headers.get('Content-Type') === 'application/json' ? responce.json() : responce.text()) as T
   }
-  private get<T>(pathname: string, body?: FormData, query?: Record<string, string>, toJSON: boolean = true): Promise<T> {
+  private get<T>(pathname: string, body?: FormData, query?: Record<string, string>, toJSON: boolean = true) {
     return this.fetchWrapper<T>('GET', pathname, body, query, toJSON)
   }
-  private post<T>(pathname: string, body?: FormData, query?: Record<string, string>, toJSON: boolean = true): Promise<T>{
+  private post<T>(pathname: string, body?: FormData, query?: Record<string, string>, toJSON: boolean = true) {
     return this.fetchWrapper<T>('POST', pathname, body, query, toJSON)
   }
-  private put<T>(pathname: string, body?: FormData, query?: Record<string, string>, toJSON: boolean = true): Promise<T> {
+  private put<T>(pathname: string, body?: FormData, query?: Record<string, string>, toJSON: boolean = true) {
     return this.fetchWrapper<T>('PUT', pathname, body, query, toJSON)
   }
-  private delete<T>(pathname: string, body?: FormData, query?: Record<string, string>, toJSON: boolean = true): Promise<T> {
+  private delete<T>(pathname: string, body?: FormData, query?: Record<string, string>, toJSON: boolean = true) {
     return this.fetchWrapper<T>('DELETE', pathname, body, query, toJSON)
   }
 }

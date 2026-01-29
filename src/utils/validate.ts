@@ -21,27 +21,27 @@ export const validate = (value: string, name: string): [string, boolean] => {
   let message = ''
 
   switch (name) {
-    case "first_name":
+    case 'first_name':
       if (value[0] !== value[0].toUpperCase()) {
-        message = "Первая буква должна быть заглавной"
+        message = 'Первая буква должна быть заглавной'
       } else {
         message = 'Введите корректное имя'
       }
       break
-    
-    case "second_name":
+
+    case 'second_name':
       if (value[0] !== value[0].toUpperCase()) {
-        message = "Первая буква должна быть заглавной"
+        message = 'Первая буква должна быть заглавной'
       } else {
         message = 'Введите корректную фамилию'
       }
       break
-    
-    case "phone":
+
+    case 'phone':
       if (value.length < 10 || value.length > 15) {
         message = 'Телефон должен содержать от 10 до 15 символов'
       } else {
-        message = "Введите корректный телефон"
+        message = 'Введите корректный телефон'
       }
       break
 

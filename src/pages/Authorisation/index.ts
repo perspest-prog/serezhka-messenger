@@ -1,9 +1,11 @@
-import Component, { type Props } from "../../core/Component";
-import Button from "../../components/Button";
-import Form from "../../components/Form";
-import Input from "../../components/Input";
-import Link from "../../components/Link";
-import template from "./template.hbs"
+import Component, { type Props } from '../../core/Component'
+import Button from '../../components/Button'
+import Form from '../../components/Form'
+import Input from '../../components/Input'
+import Link from '../../components/Link'
+import template from './template.hbs'
+import { authController } from '../../settings'
+import withoutAuth from '../../hocs/withoutAuth'
 
 interface RegistrationProps extends Props {
   form: Form
@@ -11,29 +13,23 @@ interface RegistrationProps extends Props {
 
 class Authorisation extends Component<RegistrationProps> {
   constructor() {
-    super({form: new Form(
-  {
-    value: "Вход",
-    inputs:
-    [
-      new Input({name: "login", type: "text", labelValue: "Логин"}),
-      new Input({name: "password", type: "password", labelValue: "Пароль"}),
-    ],
-    button: new Button(
-      {
-        type: 'submit',
-        label: 'Авторизоваться'
-      }
-    ),
-    link: new Link(
-      {
-        path: '/signup',
-        value: 'Нет аккаунта?'
-      }
-    ),
-    action: console.log
-  }
-      )
+    super({
+      form: new Form({
+        value: 'Вход',
+        inputs: [
+          new Input({ name: 'login', type: 'text', labelValue: 'Логин' }),
+          new Input({ name: 'password', type: 'password', labelValue: 'Пароль' }),
+        ],
+        button: new Button({
+          type: 'submit',
+          label: 'Авторизоваться',
+        }),
+        link: new Link({
+          path: '/signup',
+          value: 'Нет аккаунта?',
+        }),
+        action: authController.signin.bind(authController),
+      }),
     })
   }
   protected render(): Handlebars.TemplateDelegate {
@@ -41,4 +37,4 @@ class Authorisation extends Component<RegistrationProps> {
   }
 }
 
-export default Authorisation
+export default withoutAuth(Authorisation)

@@ -1,35 +1,24 @@
-import EventBus from "./EventBus";
+import EventBus from './EventBus'
 
-type State = object
+class Store<S, A> extends EventBus {
+  private state: S
+  private reducer: (previos: S, action: A) => S
 
-interface Action {
-  type: string,
-  payload: State
-}
-
-
-class Store extends EventBus {
-  private static instance: Store
-  private state!: State
-  constructor(state: State = {}) {
-    if (Store.instance) {
-      return Store.instance
-    }
+  constructor(initalState: S, reducer: (previous: S, action: A) => S) {
     super()
-    this.state = state
 
-    Store.instance = this
+    this.state = initalState
+    this.reducer = reducer
   }
 
   public getState() {
     return this.state
   }
 
-  public dispatch(action: Action) {
-    this.state = action.payload
+  public dispatch(action: A) {
+    this.state = this.reducer(this.state, action)
     this.emit('update')
   }
 }
 
 export default Store
-export type { State }
