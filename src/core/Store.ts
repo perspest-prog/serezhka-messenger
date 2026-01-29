@@ -1,4 +1,4 @@
-import EventBus from "./EventBus";
+import EventBus from './EventBus'
 
 class Store<S, A> extends EventBus {
   private state: S
@@ -21,4 +21,4 @@ class Store<S, A> extends EventBus {
   }
 }
 
-export default Store;
+export default Store

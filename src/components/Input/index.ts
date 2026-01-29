@@ -1,20 +1,20 @@
-import template from "./template.hbs"
-import Component, { type Props } from "../../core/Component";
-import classes from "./styles.module.css"
-import { validate } from "../../utils/validate";
+import Component, { type Props } from '../../core/Component'
+import template from './template.hbs'
+import classes from './styles.module.css'
+import { validate } from '../../utils/validate'
 
-interface InputProps extends Props{
-  name: "first_name" | "second_name" | "login" | "email" | "email" | "password" | "phone",
-  type: string,
-  error: string,
-  labelValue: string,
-  value: string,
-  isValid: boolean 
+interface InputProps extends Props {
+  name: 'first_name' | 'second_name' | 'login' | 'email' | 'email' | 'password' | 'phone'
+  type: string
+  error: string
+  labelValue: string
+  value: string
+  isValid: boolean
 }
 
 class Input extends Component<InputProps> {
-  constructor(props: Omit<InputProps, "value" | "error" | "isValid">) {
-    super({...props, classes, error: "", isValid: true})
+  constructor(props: Omit<InputProps, 'value' | 'error' | 'isValid'>) {
+    super({ ...props, classes, value: '', error: '', isValid: true })
   }
   protected render(): Handlebars.TemplateDelegate {
     return template
@@ -22,7 +22,7 @@ class Input extends Component<InputProps> {
   protected componentDidMount(): void {
     this.events.change = this.handlerChange.bind(this)
   }
-  private handlerChange(event: Event) {
+  private handlerChange(event: Event & { target: HTMLInputElement }) {
     this.state.value = event.target.value.trim()
     this.handlerFocusout()
   }
