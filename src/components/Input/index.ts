@@ -24,7 +24,7 @@ class Input extends Component<InputProps> {
   }
   private handlerChange(event: Event & { target: HTMLInputElement }) {
     this.state.value = event.target.value.trim()
-    this.handlerFocusout()
+    this.handlerFocusout.call(this)
   }
   public handlerFocusout() {
     const [error, isValid] = validate(this.state.value, this.state.name)

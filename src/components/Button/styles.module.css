@@ -7,3 +7,12 @@
   border-radius: 8px;
   border: 0;
 }
+
+.button-active {
+  border: none;
+  background-color: transparent;
+  color: var(--blue-color);
+  font-size: 1rem;
+  margin-block-start: 0.75rem;
+  cursor: pointer;
+}

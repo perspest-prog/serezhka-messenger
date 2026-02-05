@@ -17,9 +17,13 @@ export const validate = (value: string, name: string): [string, boolean] => {
   if (rule.test(value)) {
     return ['', true]
   }
-
   let message = ''
 
+  if (value.trim().length === 0) {
+    return['Поле не может быть пустым', false]
+  }
+  
+  
   switch (name) {
     case 'first_name':
       if (value[0] !== value[0].toUpperCase()) {

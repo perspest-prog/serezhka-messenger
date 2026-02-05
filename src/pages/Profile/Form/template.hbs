@@ -1,10 +1,15 @@
-<form>
-  <div class={{classes.form_container-profile}}>
-    {{#each inputs}}
+<div>
+  <form>
+    <div class={{classes.form_container-profile}}>
+      {{#each inputs}}
       {{{this}}}
-    {{/each}}
-  </div>
-  {{#each buttons}}
-    {{{this}}}
-  {{/each}}
-</form>
+      {{/each}}
+    </div>
+    <div class={{classes.button_container-profile}}>
+      {{#each buttons}}
+      {{{this}}}
+      {{/each}}
+      {{{link}}}
+    </div>
+  </form>
+</div>

@@ -171,11 +171,11 @@ abstract class Component<P extends Props = any> {
     this.componentWillUnmount()
   }
 
-  protected componentDidMount() {}
+  protected componentDidMount() { }
 
-  protected componentDidUpdate() {}
+  protected componentDidUpdate() { }
 
-  protected componentWillUnmount() {}
+  protected componentWillUnmount() { }
 
   protected abstract render(): TemplateDelegate
 

@@ -1,4 +1,4 @@
-import { AuthController } from './controllers'
+import { AuthController, UserController } from './controllers'
 import Router from './core/Router'
 import Store from './core/Store'
 
@@ -33,7 +33,7 @@ interface AppState {
 
 export type { User, AppState }
 
-// Router Store AuthController initializers
+// Router Store AuthController UserController initializers
 const rootElement = document.getElementById('root')
 
 if (!rootElement) {
@@ -52,6 +52,7 @@ export const store = new Store<AppState, Action>({ user: null, error: null }, (p
 })
 
 export const authController = new AuthController()
+export const userController = new UserController()
 
 // constants
 export const DEFAULT_AUTHORIZED_PAGE = '/profile'

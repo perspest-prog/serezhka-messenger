@@ -1,1 +1,9 @@
-<button class={{classes.button}} type={{type}}>{{label}}</button>
+{{#if isActive}}
+  <button class={{classes.button}} type={{type}}>{{label}}</button>
+{{else}}
+  {{#if isHidden}}
+  <button class={{classes.button-active}} type={{type}} hidden>{{label}}</button>
+  {{else}}
+    <button class={{classes.button-active}} type={{type}}>{{label}}</button>
+  {{/if}}
+{{/if}}

@@ -43,7 +43,7 @@ abstract class BaseAPI {
       throw new Error('Not ok')
     }
 
-    return (responce.headers.get('Content-Type') === 'application/json' ? responce.json() : responce.text()) as T
+    return (responce.headers.get('Content-Type') === 'application/json; charset=utf-8' ? responce.json() : responce.text()) as T
   }
   private get<T>(pathname: string, body?: FormData, query?: Record<string, string>, toJSON: boolean = true) {
     return this.fetchWrapper<T>('GET', pathname, body, query, toJSON)
