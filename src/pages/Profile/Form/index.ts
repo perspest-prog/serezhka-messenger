@@ -29,7 +29,6 @@ class Form extends Component<FormProps> {
     })
   }
   private handlerFirstButton() {
-    console.log(this.children.buttons[0].state.isActive)
     this.children.buttons[0].changeActive()
     this.children.buttons[1].changeHidden()
     this.children.link.changeHidden()
@@ -37,23 +36,33 @@ class Form extends Component<FormProps> {
     this.children.inputs.forEach((input: Input) => input.changeFrozen())
 
     if (!this.children.buttons[0].state.isActive) {
-      if (this.children.inputs.every((input: Input) => input.handlerFocusout())) {
+      if (this.children.inputs.filter(input => ['first_name', 'second_name', 'login', 'email', 'password', 'phone'].includes(input.state.name)).every((input: Input) => input.handlerFocusout())) {
         const data = new FormData()
         this.children.inputs.forEach((input: Input) => data.append(input.state.name, input.state.value))
+        data.delete('newPassword')
+        data.delete('oldPassword')
+        data.delete('repeatNewPassword')
         userController.editUser.call(userController, data)
       }
     }
   }
   private handlerSecondButton() {
+    this.children.link.changeHidden()
+    this.children.buttons[0].changeHidden()
+
     const data = new FormData()
     this.children.inputs.forEach((input: Input) => {
-      input.changeHidden()
       input.changeFrozen()
-      data.append(input.state.name, input.state.value)
+      input.changeHidden()
     })
-    console.log(this.children.inputs.at(-1).state.isFrozen)
     if (this.children.inputs.at(-1).state.isFrozen) {
+        this.children.inputs.forEach((input: Input) => data.append(input.state.name, input.state.value))
         data.delete('repeatNewPassword')
+        data.delete('first_name')
+        data.delete('second_name')
+        data.delete('login')
+        data.delete('email')
+        data.delete('phone')
         userController.editPassword.call(userController, data)
       }
   }
