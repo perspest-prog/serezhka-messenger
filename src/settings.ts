@@ -14,6 +14,14 @@ type User = {
   email: string
 }
 
+type Password = {
+  'oldPassword': string,
+  'newPassword': string,
+  'repeatNewPassword': string
+}
+
+type formVariant = 'user' | 'editPassword' 
+
 interface SetUserAction {
   type: 'SET_USER'
   payload: User
@@ -24,10 +32,22 @@ interface SetErrorAction {
   payload: Error
 }
 
-type Action = SetUserAction | SetErrorAction
+interface SetPasswordAction {
+  type: 'SET_PASSWORD',
+  payload: Password
+}
+
+interface SetFormVariantActon {
+  type: 'SET_FORMVARIANT'
+  payload: formVariant
+}
+
+type Action = SetUserAction | SetErrorAction | SetPasswordAction | SetFormVariantActon
 
 interface AppState {
   user: User | null
+  password: Password | null
+  formVariant: formVariant
   error: Error | null
 }
 
@@ -42,12 +62,17 @@ if (!rootElement) {
 
 export const router = new Router(rootElement)
 
-export const store = new Store<AppState, Action>({ user: null, error: null }, (previous, action) => {
+export const store = new Store<AppState, Action>({ user: null, password: null, error: null, formVariant: 'user' }, (previous, action) => {
   switch (action.type) {
     case 'SET_USER':
       return { ...previous, user: action.payload }
+    case 'SET_PASSWORD':
+      return { ...previous, password: action.payload }
+    case 'SET_FORMVARIANT':
+      return { ...previous, formVariant: action.payload }
     case 'SET_ERROR':
       return { ...previous, error: action.payload }
+      
   }
 })
 

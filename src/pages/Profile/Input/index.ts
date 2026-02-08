@@ -4,19 +4,18 @@ import classes from './style.module.css'
 import { validate } from '../../../utils/validate'
 
 interface InputProps extends Props {
-  name: 'first_name' | 'second_name' | 'login' | 'email' | 'password' | 'phone' | "oldPassword" | "newPassword"
+  name: 'first_name' | 'second_name' | 'login' | 'email' | 'password' | 'phone' | "oldPassword" | "newPassword" | 'repeatNewPassword'
   type: string
   error: string
   labelValue: string
-  value: string
+  value?: string
   isFrozen: boolean
   isValid: boolean
-  isHidden?: boolean
 }
 
 class Input extends Component<InputProps> {
-  constructor(props: Omit<InputProps, 'error' | 'isFrozen' | 'value' | 'isValid'>) {
-    super({value: '', isHidden: false, ...props, classes, error: '', isFrozen: true, isValid: true})
+  constructor(props: Omit<InputProps, 'error' | 'isFrozen' | 'isValid'>) {
+    super({value: '', ...props, classes, error: '', isFrozen: true, isValid: true})
   }
 
   protected render(): Handlebars.TemplateDelegate {
@@ -28,7 +27,6 @@ class Input extends Component<InputProps> {
   }
 
   private handlerChange(event: Event) {
-    console.log(this)
     this.state.value = event.target.value.trim()
     this.handlerFocusout.call(this)
   }
@@ -36,9 +34,7 @@ class Input extends Component<InputProps> {
   public changeFrozen() {
     this.state.isFrozen = !this.state.isFrozen
   }
-  public changeHidden() {
-    this.state.isHidden = !this.state.isHidden
-  }
+
   public handlerFocusout() {
     const [error, isValid] = validate(this.state.value, this.state.name)
     this.state.error = error

@@ -25,7 +25,6 @@ class AuthController {
 
       router.redirect(DEFAULT_AUTHORIZED_PAGE)
     } catch (error) {
-      console.log(error)
       const typeError = error as { name: string; message: string }
       store.dispatch({ type: 'SET_ERROR', payload: typeError })
     }
