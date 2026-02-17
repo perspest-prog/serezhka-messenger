@@ -3,11 +3,14 @@ const Regulars = {
   second_name: /^[A-Z][a-zA-Z]{1,9}$/,
   email: /^[a-zA-Z0-9]+[a-zA-Z0-9.-_]*@[a-zA-Z]+\.[a-zA-Z]{2,3}$/,
   password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[\w\W].{8,40}$/,
+  oldPassword: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[\w\W].{8,40}$/,
+  newPassword: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[\w\W].{8,40}$/,
+  repeatNewPassword: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[\w\W].{8,40}$/,
   phone: /^[0-9]{9,14}$/,
   login: /^(?=.*[a-zA-Z])[a-zA-Z0-9]{3,20}$/,
 } as const
 
-export const validate = (value: string, name: string): [string, boolean] => {
+export const validate = (name: string, value: string): [string, boolean] => {
   if (!(name in Regulars)) {
     return ['', false]
   }
@@ -66,7 +69,50 @@ export const validate = (value: string, name: string): [string, boolean] => {
         message = 'Введите корректный пароль'
       }
       break
+    
+    case 'oldPassword':
+      if (value.length < 8 || value.length > 40) {
+        message = 'Пароль должен содержать от 8 до 40 символов'
+      } else if (!/[a-z]/.test(value)) {
+        message = 'Пароль должен содержать минимум одну маленькую букву'
+      } else if (!/[A-Z]/.test(value)) {
+        message = 'Пароль должен содержать минимум одну большую букву'
+      } else if (!/[0-9]/.test(value)) {
+        message = 'Пароль должен содержать минимум одну цифру'
+      } else {
+        message = 'Введите корректный пароль'
+      }
+      break
+    
+    case 'newPassword':
+      if (value.length < 8 || value.length > 40) {
+        message = 'Пароль должен содержать от 8 до 40 символов'
+      } else if (!/[a-z]/.test(value)) {
+        message = 'Пароль должен содержать минимум одну маленькую букву'
+      } else if (!/[A-Z]/.test(value)) {
+        message = 'Пароль должен содержать минимум одну большую букву'
+      } else if (!/[0-9]/.test(value)) {
+        message = 'Пароль должен содержать минимум одну цифру'
+      } else {
+        message = 'Введите корректный пароль'
+      }
+      break
 
+    case 'repeatNewPassword':
+      if (value.length < 8 || value.length > 40) {
+        message = 'Пароль должен содержать от 8 до 40 символов'
+      } else if (!/[a-z]/.test(value)) {
+        message = 'Пароль должен содержать минимум одну маленькую букву'
+      } else if (!/[A-Z]/.test(value)) {
+        message = 'Пароль должен содержать минимум одну большую букву'
+      } else if (!/[0-9]/.test(value)) {
+        message = 'Пароль должен содержать минимум одну цифру'
+      } else {
+        message = 'Введите корректный пароль'
+      }
+      break
+    
+      
     case 'login':
       if (value.length < 3 || value.length > 20) {
         message = 'Логин должен содержать от 3 до 20 символов'

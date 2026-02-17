@@ -1,11 +1,11 @@
 import Component, { type Props } from '../../../core/Component'
 import template from './template.hbs'
-import classes from './style.module.css'
+import classes from './styles.module.css'
 import { validate } from '../../../utils/validate'
 
 interface InputProps extends Props {
-  name: 'first_name' | 'second_name' | 'login' | 'email' | 'password' | 'phone' | "oldPassword" | "newPassword" | 'repeatNewPassword'
-  type: string
+  name: 'first_name' | 'second_name' | 'login' | 'email' | 'password' | 'phone' | "oldPassword" | "newPassword" | 'repeatNewPassword' | 'avatar'
+  type: 'text' | 'password' | 'file' | 'button'
   error: string
   labelValue: string
   value?: string
@@ -16,6 +16,7 @@ interface InputProps extends Props {
 class Input extends Component<InputProps> {
   constructor(props: Omit<InputProps, 'error' | 'isFrozen' | 'isValid'>) {
     super({value: '', ...props, classes, error: '', isFrozen: true, isValid: true})
+    this.events.change = this.handlerChange.bind(this)
   }
 
   protected render(): Handlebars.TemplateDelegate {
@@ -23,11 +24,11 @@ class Input extends Component<InputProps> {
   }
 
   protected componentDidMount(): void {
-    this.events.change = this.handlerChange.bind(this)
   }
 
   private handlerChange(event: Event) {
     this.state.value = event.target.value.trim()
+    console.log(this.state.value)
     this.handlerFocusout.call(this)
   }
 
@@ -36,7 +37,7 @@ class Input extends Component<InputProps> {
   }
 
   public handlerFocusout() {
-    const [error, isValid] = validate(this.state.value, this.state.name)
+    const [error, isValid] = validate(this.state.name, this.state.value)
     this.state.error = error
     this.state.isValid = isValid
     return isValid

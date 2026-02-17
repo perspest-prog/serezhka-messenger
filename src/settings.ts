@@ -20,7 +20,7 @@ type Password = {
   'repeatNewPassword': string
 }
 
-type formVariant = 'user' | 'editPassword' 
+type formVariant = 'user' | 'editPassword'
 
 interface SetUserAction {
   type: 'SET_USER'
@@ -80,5 +80,6 @@ export const authController = new AuthController()
 export const userController = new UserController()
 
 // constants
+export const BASE_URL = 'https://ya-praktikum.tech/api/v2/resources'
 export const DEFAULT_AUTHORIZED_PAGE = '/profile'
 export const DEFAULT_UNAUTHORIZED_PAGE = '/auth'

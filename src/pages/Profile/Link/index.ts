@@ -1,6 +1,6 @@
 import template from './template.hbs'
 import Component, { type Props } from '../../../core/Component'
-import classes from './style.module.css'
+import classes from './styles.module.css'
 import { router } from '../../../settings'
 
 interface LinkProps extends Props {

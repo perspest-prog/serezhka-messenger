@@ -7,11 +7,12 @@ interface ButtonProps extends Props {
   label: string
   isActive?: boolean
   isHidden?: boolean
+  action? : void | (() =>  void) 
 }
 
 class Button extends Component<ButtonProps> {
   constructor(props: ButtonProps) {
-    super({ isActive: true, isHidden: false, ...props, classes })
+    super({ action: () => {}, isActive: true, isHidden: false, ...props, classes})
   }
   protected render(): Handlebars.TemplateDelegate {
     return template

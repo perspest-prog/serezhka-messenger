@@ -9,7 +9,7 @@ class UserApi extends BaseAPI {
     return this.http.put<User>('/profile', data)
   }
   public editAvatar(data: FormData) {
-    return this.http.put<User>('/profile/avatar', data)
+    return this.http.put<User>('/profile/avatar', data, undefined, false)
   }
   public editPassword(data: FormData) {
     return this.http.put<void>('/password', data)

@@ -1,9 +1,12 @@
-.input-validate {
+.input {
   inline-size: 280px;
   font-size: 0.75rem;
   padding-block: 0.5rem;
   padding-inline: 0;
   border: none;
+}
+
+.input-validate {
   border-block-end-width: 2px;
   border-block-end-style: solid;
   border-block-end-color: var(--blue-color);

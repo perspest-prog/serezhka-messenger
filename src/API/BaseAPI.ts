@@ -29,13 +29,11 @@ abstract class BaseAPI {
         url.searchParams.set(key, value)
       }
     }
-
+    const headers = toJSON ? { 'Content-Type': 'application/json' } : undefined
     const responce = await fetch(url, {
       method,
       credentials: 'include',
-      headers: {
-        'Content-Type': toJSON ? 'application/json' : 'multipart/form-data',
-      },
+      headers,
       body: body ? (toJSON ? JSON.stringify(Object.fromEntries(body)) : body) : null,
     })
 

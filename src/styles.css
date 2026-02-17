@@ -4,6 +4,7 @@
   --gray-color: #999;
   --blue-color: #3369F3;
   --red-color: #FF0000;
+  --base-transition: background-color 0.1s linear;
 }
 
 body, input, button {

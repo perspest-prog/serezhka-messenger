@@ -1,7 +1,7 @@
 import Component, { type Props } from '../../../core/Component'
 import Input from '../Input'
 import template from './template.hbs'
-import classes from './style.module.css'
+import classes from './styles.module.css'
 import Button from '../../../components/Button'
 import type Link from '../Link'
 import connect from '../../../hocs/connect'
@@ -50,22 +50,19 @@ class Form extends Component<FormProps> {
     this.children.link.changeHidden()
     this.children.buttons[0].changeHidden()
     
+    if (!this.children.buttons[0].state.isHidden) {
+      const data = new FormData()
+      this.children.inputs.forEach((input: Input) => {console.log(input.state.value); data.append(input.state.name, input.state.value)})
+      userController.editPassword.call(userController, data)
+    }
     if (store.getState().formVariant !== 'editPassword') {
       store.dispatch({type: 'SET_FORMVARIANT', payload: 'editPassword'})
-      console.log(store.getState().formVariant)
     }
     else {
       store.dispatch({type: 'SET_FORMVARIANT', payload: 'user'})
     }
-    
-    this.children.inputs.forEach((input: Input) => {
-      input.changeFrozen()
-    })
-    if (this.children.inputs.at(-1).state.isFrozen) {
-        const data = new FormData()
-        this.children.inputs.forEach((input: Input) => data.append(input.state.name, input.state.value))
-        userController.editPassword.call(userController, data)
-      }
+
+    this.children.inputs.forEach((input: Input) => input.changeFrozen())
   }
 
 

@@ -6,6 +6,15 @@
   padding-block: 0.75rem;
   border-radius: 8px;
   border: 0;
+  transition: var(--base-transition);
+
+  &:hover {
+    background-color: #390dd7;
+  }
+
+  &:active {
+    background-color: #300cb2;
+  }
 }
 
 .button-active {

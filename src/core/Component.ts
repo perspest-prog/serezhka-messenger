@@ -96,7 +96,6 @@ abstract class Component<P extends Props = any> {
 
     this.element.replaceWith(html)
     this.element = html
-
     this.addEvents()
   }
 
