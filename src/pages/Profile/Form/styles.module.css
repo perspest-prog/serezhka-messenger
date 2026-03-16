@@ -1,0 +1,10 @@
+.form_container-profile {
+  width: 510px;
+}
+
+.button_container-profile {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}

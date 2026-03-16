@@ -6,6 +6,9 @@ import './styles.css'
 
 window.addEventListener('DOMContentLoaded', async () => {
   await authController.getUser()
-
-  router.use('/signup', Registration).use('/auth', Authorisation).use('/profile', Profile).start()
+  router
+    .use('/signup', Registration)
+    .use('/auth', Authorisation)
+    .use('/profile', Profile)
+    .start()
 })

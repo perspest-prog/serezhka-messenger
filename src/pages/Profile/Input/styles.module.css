@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 510px;
+  width: 100%;
 }
 
 .container-profile:not(:last-child) {
@@ -17,4 +17,10 @@
   outline: none;
   text-align: right;
   padding: 10px;
+}
+
+.error {
+  user-select: none;
+  font-size: 0.6rem;
+  color: var(--red-color);
 }

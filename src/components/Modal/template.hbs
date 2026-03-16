@@ -1,0 +1,25 @@
+{{#if openModal}}
+   <div class="{{classes.modal-container}}">
+    <div class="{{classes.dialog}}">
+      <h2>{{title}}</h2>
+      <form>
+        {{#each inputs}}
+          {{{this}}}
+        {{/each}}
+        {{{button}}}
+      </form>
+    </div>
+  </div>
+{{else}}
+  <div class="{{classes.hidden-modal}}">
+    <div class="{{classes.dialog}}">
+      <h2>{{title}}</h2>
+      <form>
+        {{#each inputs}}
+          {{{this}}}
+        {{/each}}
+        {{{button}}}
+      </form>
+    </div>
+  </div>
+{{/if}}

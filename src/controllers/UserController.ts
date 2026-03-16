@@ -1,53 +1,41 @@
-import { AuthAPI } from '../API'
-import { DEFAULT_AUTHORIZED_PAGE, router, store } from '../settings'
+import { UserApi } from "../API";
+import { store } from "../settings";
 
-class AuthController {
-  private api = new AuthAPI()
+class UserController {
+  private api = new UserApi()
 
   constructor() { }
 
-  public async getUser() {
+  public async editUser(formData: FormData) {
     try {
-      const payload = await this.api.fetchUser()
-
+      const payload = await this.api.editProfile(formData)
       store.dispatch({ type: 'SET_USER', payload })
     } catch (error) {
       const typeError = error as { name: string; message: string }
       store.dispatch({ type: 'SET_ERROR', payload: typeError })
     }
   }
-
-  public async signin(data: FormData) {
+  public async editAvatar(formData: FormData) {
     try {
-      await this.api.signin(data)
-
-      await this.getUser()
-
-      router.redirect(DEFAULT_AUTHORIZED_PAGE)
+      const payload = await this.api.editAvatar(formData)
+      store.dispatch({ type: 'SET_USER', payload })
     } catch (error) {
       const typeError = error as { name: string; message: string }
       store.dispatch({ type: 'SET_ERROR', payload: typeError })
     }
   }
-
-  public async signup(data: FormData) {
+  public async editPassword(formData: FormData) {
     try {
-      await this.api.signup(data)
-
-      await this.getUser()
-
-      router.redirect(DEFAULT_AUTHORIZED_PAGE)
+      await this.api.editPassword(formData)
     } catch (error) {
       const typeError = error as { name: string; message: string }
       store.dispatch({ type: 'SET_ERROR', payload: typeError })
     }
   }
-
-  public async logout() {
+  public async searchUser(formData: FormData) {
     try {
-      await this.api.logout()
-
-      window.location.reload()
+      await this.api.editAvatar(formData)
+      // дописать
     } catch (error) {
       const typeError = error as { name: string; message: string }
       store.dispatch({ type: 'SET_ERROR', payload: typeError })
@@ -55,4 +43,4 @@ class AuthController {
   }
 }
 
-export default AuthController
+export default UserController

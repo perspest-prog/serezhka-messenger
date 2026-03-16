@@ -40,8 +40,8 @@ abstract class Component<P extends Props = any> {
   constructor({ events, ...props }: P) {
     const { state, children } = Component.getStateAndChildren(props)
 
-    this.state = this.makeProxyState(state)
-    this.children = children
+    this.state = this.makeProxy(state)
+    this.children = this.makeProxy(children)
     this.events = this.makeProxyEvents(events || {})
 
     this.eventBus.on(PHASES.MOUNT, this._componentDidMount.bind(this))
@@ -68,14 +68,13 @@ abstract class Component<P extends Props = any> {
     return { state, children }
   }
 
-  private makeProxyState(state: State<P>) {
-    const self = this
-
+  private makeProxy(state: State<P> | Children<P>) {
     return new Proxy(state, {
       set: (target, prop, value) => {
-        target[prop] = value
-        self.eventBus.emit(PHASES.UPDATE)
-        return true
+        const result = Reflect.set(target, prop, value)
+        this.eventBus.emit(PHASES.UPDATE)
+
+        return result
       },
     })
   }
@@ -97,7 +96,6 @@ abstract class Component<P extends Props = any> {
 
     this.element.replaceWith(html)
     this.element = html
-
     this.addEvents()
   }
 

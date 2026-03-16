@@ -29,13 +29,11 @@ abstract class BaseAPI {
         url.searchParams.set(key, value)
       }
     }
-
+    const headers = toJSON ? { 'Content-Type': 'application/json' } : undefined
     const responce = await fetch(url, {
       method,
       credentials: 'include',
-      headers: {
-        'Content-Type': toJSON ? 'application/json' : 'multipart/form-data',
-      },
+      headers,
       body: body ? (toJSON ? JSON.stringify(Object.fromEntries(body)) : body) : null,
     })
 
@@ -43,7 +41,7 @@ abstract class BaseAPI {
       throw new Error('Not ok')
     }
 
-    return (responce.headers.get('Content-Type') === 'application/json' ? responce.json() : responce.text()) as T
+    return (responce.headers.get('Content-Type') === 'application/json; charset=utf-8' ? responce.json() : responce.text()) as T
   }
   private get<T>(pathname: string, body?: FormData, query?: Record<string, string>, toJSON: boolean = true) {
     return this.fetchWrapper<T>('GET', pathname, body, query, toJSON)
