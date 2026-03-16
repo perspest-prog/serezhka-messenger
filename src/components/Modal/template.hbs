@@ -3,7 +3,9 @@
     <div class="{{classes.dialog}}">
       <h2>{{title}}</h2>
       <form>
-        {{{input}}}
+        {{#each inputs}}
+          {{{this}}}
+        {{/each}}
         {{{button}}}
       </form>
     </div>
@@ -13,7 +15,9 @@
     <div class="{{classes.dialog}}">
       <h2>{{title}}</h2>
       <form>
-        {{{input}}}
+        {{#each inputs}}
+          {{{this}}}
+        {{/each}}
         {{{button}}}
       </form>
     </div>

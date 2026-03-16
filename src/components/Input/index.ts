@@ -2,7 +2,6 @@ import Component, { type Props } from '../../core/Component'
 import template from './template.hbs'
 import classes from './styles.module.css'
 import { validate } from '../../utils/validate'
-import { userController } from '../../settings'
 
 interface InputProps extends Props {
   name: 'first_name' | 'second_name' | 'login' | 'email' | 'email' | 'password' | 'phone' | 'avatar'

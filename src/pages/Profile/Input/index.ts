@@ -28,7 +28,6 @@ class Input extends Component<InputProps> {
 
   private handlerChange(event: Event) {
     this.state.value = event.target.value.trim()
-    console.log(this.state.value)
     this.handlerFocusout.call(this)
   }
 

@@ -8,7 +8,7 @@ import Form from './Form'
 import classes from './styles.module.css'
 import withAuth from '../../hocs/withAuth'
 import Link from './Link'
-import { authController, store } from '../../settings'
+import { authController } from '../../settings'
 import Modal from '../../components/Modal'
 
 interface ProfileProps extends Props {
@@ -38,7 +38,7 @@ class Profile extends Component<ProfileProps> {
         ],
         link: new Link({ path: '/auth', value: 'Выйти', action: authController.logout.bind(authController) })
       }),
-      modal: new Modal({title: 'Загрузите файл', input: new ModalInput({name: 'avatar', type: 'file', labelValue: '', isAvatar: true}), button: new Button({type: 'button', label: 'Поменять'}), openModal: false }),
+      modal: new Modal({title: 'Загрузите файл', inputs: [new ModalInput({name: 'avatar', type: 'file', labelValue: '', isAvatar: true})], button: new Button({type: 'button', label: 'Поменять'}), openModal: false }),
       classes,
     })
     this.children.avatar.events.click = () => this.children.modal.state.openModal = !this.children.modal.state.openModal

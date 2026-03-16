@@ -9,7 +9,7 @@ import connect from '../../hocs/connect';
 
 interface ModalProps extends Props {
   title: string
-  input: Input
+  inputs: Input[]
   button: Button
   openModal: boolean
 }
@@ -31,10 +31,18 @@ class Modal extends Component<ModalProps> {
       this.state.openModal = !this.state.openModal
     }
   }
+  
   private handlerButton() {
     if (this.state.openModal) {
       const data = new FormData
-      data.append(this.children.input.state.name, this.children.input.getContent()?.querySelector('input')?.files[0])
+      this.children.inputs.forEach((input: Input) => {
+        if (input.state.name === 'avatar') {
+          data.append(input.state.name, input.getContent()?.querySelector('input')?.files[0])
+        }
+        else {
+          data.append(input.state.name, input.state.value)
+        }
+      })
       userController.editAvatar(data)
     }
   }

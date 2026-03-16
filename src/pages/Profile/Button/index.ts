@@ -11,7 +11,7 @@ interface ButtonProps extends Props {
 
 class Button extends Component<ButtonProps> {
   constructor(props: Omit<ButtonProps, 'hasAvatar'>) {
-    super({ ...props, classes, hasAvatar: false})
+    super({ ...props, classes, hasAvatar: false, avatarUrl: ''})
   }
 
   protected componentDidMount(): void {
@@ -28,6 +28,6 @@ class Button extends Component<ButtonProps> {
 export default connect(Button, (data) => {
   return {
     hasAvatar: true,
-    avatarUrl: BASE_URL + data!.user!.avatar
+    avatarUrl: BASE_URL + data!.user?.avatar
   }
 })
